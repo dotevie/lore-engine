@@ -61,7 +61,7 @@ jobs:
       - name: Add Warning (linux-specific)
         run: echo "libluajit-5.1-2 is required to run Lore Engine on Linux. Make sure you have it installed." > export/release/linux/bin/warning-LINUX.txt
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
           name: linuxBuild
           path: 'export/release/linux/bin'
@@ -101,7 +101,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build windows -Dbuildcrash --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
           name: windowsBuild
           path: export/release/windows/bin
@@ -140,7 +140,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
           name: macBuild
           path: export/release/macos/bin
