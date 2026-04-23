@@ -3,12 +3,12 @@
     {
       "name": "actuate",
       "type": "haxelib",
-      "version": null
+      "version": "1.9.0"
     },
     {
       "name": "lime",
       "type": "haxelib",
-      "version": null
+      "version": "8.2.0"
     },
     {
       "name": "openfl",
@@ -23,7 +23,7 @@
     {
       "name": "flxgif",
       "type": "haxelib",
-      "version": null
+      "version": "1.0.3"
     },
     {
       "name": "flixel-addons",
@@ -38,7 +38,7 @@
     {
       "name": "flixel-ui",
       "type": "haxelib",
-      "version": null
+      "version": "2.5.0"
     },
     {
       "name": "hxcpp",
@@ -80,28 +80,31 @@
       "type": "git",
       "dir": null,
       "ref": "master",
-      "url": "https://github.com/Aidan63/linc_discord-rpc"
+      "url": "https://github.com/Aidan63/linc_discord-rpc",
+      "NOTE": "repo is archived, so it should be fine to put no specific ref here"
     },
     {
       "name": "hscript-lore",
       "type": "git",
       "dir": null,
       "ref": "legacy",
-      "url": "https://github.com/sayofthelor/hscript-lore"
+      "url": "https://github.com/dotevie/hscript-lore",
+      "NOTE": "no ref needed here, legacy branch will have no API breaking changes"
     },
     {
       "name": "flixel-shadertoy-shader-lr",
       "type": "git",
       "dir": null,
       "ref": "legacy",
-      "url": "https://github.com/sayofthelor/flixel-shadertoy-shader-lr"
+      "url": "https://github.com/dotevie/flixel-shadertoy-shader-lr",
+      "NOTE": "no ref needed here, legacy branch will have no API breaking changes"
     },
     {
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": "https://github.com/nebulazorua/linc_luajit"
+      "ref": "daf0664aee99aa8b8d6bdd1eda993a1c3a399067",
+      "url": "https://github.com/superpowers04/linc_luajit"
     }
   ]
 }
