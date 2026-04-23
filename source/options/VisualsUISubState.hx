@@ -317,6 +317,8 @@ class VisualsUISubState extends BaseOptionsMenu
 	#end
 
 	function onChangeScaleMode() {
-		FlxG.scaleMode = Type.createInstance(CoolUtil.scaleModes[ClientPrefs.scaleMode] ?? flixel.system.scaleModes.RatioScaleMode, []);
-	}
+		var smc:Class<flixel.system.scaleModes.BaseScaleMode> = CoolUtil.scaleModes[ClientPrefs.scaleMode];
+		if (smc == null) smc = flixel.system.scaleModes.RatioScaleMode;
+		var sm:flixel.system.scaleModes.BaseScaleMode = Type.createInstance(smc, []);
+		FlxG.scaleMode = sm;	}
 }
