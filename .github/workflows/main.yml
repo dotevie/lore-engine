@@ -26,9 +26,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: ConorMacBride/install-package@v1.1.0
-        with:
-          apt: libluajit-5.1-2
+      # - uses: ConorMacBride/install-package@v1.1.0
+      #   with:
+      #     apt: libluajit-5.1-2
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.1
