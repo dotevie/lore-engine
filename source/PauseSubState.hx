@@ -140,7 +140,6 @@ class PauseSubState extends MusicBeatSubstate
 		chartingText.scrollFactor.set();
 		chartingText.setFormat(Paths.font('vcr.ttf'), 32);
 		chartingText.x = FlxG.width - (chartingText.width + 20);
-		chartingText.y = FlxG.height - (chartingText.height + 20);
 		chartingText.updateHitbox();
 		chartingText.visible = PlayState.chartingMode;
 		add(chartingText);
@@ -169,6 +168,9 @@ class PauseSubState extends MusicBeatSubstate
 			glyph.alpha = 0;
 			FlxTween.tween(glyph, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut});
 		}
+		chartingText.alpha = 0;
+		chartingText.y = glyphs[glyphs.length - 1].y - (chartingText.height + 16);
+		FlxTween.tween(chartingText, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut});
 	}
 
 	var holdTime:Float = 0;
