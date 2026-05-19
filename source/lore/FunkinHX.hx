@@ -268,11 +268,17 @@ class FunkinHX implements IFlxDestroyable {
             return ast;
         }
 
+        public var lastReturn:Dynamic = null;
+
         public function runFunc(f:String, ?args:Array<Dynamic>):Any {
-            if (!loaded) return null;
+            if (!loaded) {
+                lastReturn = null;
+                return null;
+            }
             if (args == null) args = [];
             try {
-                return interp.callMethod(f, args);
+                lastReturn = interp.callMethod(f, args);
+                return lastReturn;
             } catch (e:Dynamic) {
                 if (!ignoreErrors && !flixel.FlxG.keys.pressed.SHIFT && !__blocked) {
                     openfl.Lib.application.window.alert('Error with script: ' + scriptName + ' at line ' + interp.posInfos().lineNumber + ":\n" + e + '\n\nHold SHIFT to bypass the error if it\'s blocking gameplay.', 'Haxe script error');
@@ -282,8 +288,10 @@ class FunkinHX implements IFlxDestroyable {
                         __blocked = false;
                     });
                 }
+                lastReturn = null;
                 return null;
             }
+            lastReturn = null;
             return null;
         }
 

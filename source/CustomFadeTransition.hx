@@ -8,18 +8,30 @@ import flixel.util.FlxGradient;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 
-class CustomFadeTransition extends MusicBeatSubstate {
+class CustomFadeTransition extends lore.ScriptableSubState {
 	public static var finishCallback:Void->Void;
 	private var leTween:FlxTween = null;
 	public static var nextCamera:FlxCamera;
 	var isTransIn:Bool = false;
 	var transBlack:FlxSprite;
 	var transGradient:FlxSprite;
+	var duration:Float;
 
 	public function new(duration:Float, isTransIn:Bool) {
-		super();
-
 		this.isTransIn = isTransIn;
+		this.duration = duration;
+		super("CustomFadeTransition", (script:lore.FunkinHX) -> {
+			script.set("isTransIn", isTransIn);
+			script.set("duration", duration);
+			script.set("finishCallback", finishCallback);
+			script.set("nextCamera", nextCamera);
+		});
+		createTransition();
+	}
+
+	function createTransition() {
+		var ret = script.runFunc("createTransition", []);
+		if (ret == FunkinLua.Function_Stop) return;
 		var zoom:Float = CoolUtil.boundTo(FlxG.camera.zoom, 0.05, 1);
 		var width:Int = Std.int(FlxG.width / zoom);
 		var height:Int = Std.int(FlxG.height / zoom);
@@ -61,6 +73,8 @@ class CustomFadeTransition extends MusicBeatSubstate {
 	}
 
 	override function update(elapsed:Float) {
+		super.update();
+		if (script.lastReturn == FunkinLua.Function_Stop) return;
 		if(isTransIn) {
 			transBlack.y = transGradient.y + transGradient.height;
 		} else {
@@ -72,6 +86,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		} else {
 			transBlack.y = transGradient.y - transBlack.height;
 		}
+		super.updatePost();
 	}
 
 	override function destroy() {
