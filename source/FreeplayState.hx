@@ -393,7 +393,19 @@ class FreeplayState extends MusicBeatState
 				if (Std.string(e).startsWith("[file_contents")) {
 					openfl.Lib.application.window.alert('Difficulty ${CoolUtil.getDifficultyFilePath(curDifficulty).substr(1)} not found for song ${songs[curSelected].songName}.', 'Error');
 				}
-				else openfl.Lib.application.window.alert('Unspecified error for song ${songs[curSelected].songName}.', 'Error');
+				else {
+					openfl.Lib.application.window.alert('Error for song ${songs[curSelected].songName}: $e', 'Error');
+					#if debug
+					for (stackItem in haxe.CallStack.exceptionStack(true)) {
+						switch (stackItem) {
+							case FilePos(s, file, line, column):
+								#if sys Sys.println #else trace #end (file + " (line " + line + ")\n");
+							default:
+								#if sys Sys.println #else trace #end (stackItem);
+						}
+					}
+					#end
+				}
 			}
 		}
 		else if(controls.RESET)

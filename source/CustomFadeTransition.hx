@@ -29,8 +29,8 @@ class CustomFadeTransition extends lore.ScriptableSubState {
 		createTransition();
 	}
 
-	function createTransition() {
-		var ret = script.runFunc("createTransition", []);
+	public function createTransition() {
+		var ret = script?.runFunc("createTransition", []);
 		if (ret == FunkinLua.Function_Stop) return;
 		var zoom:Float = CoolUtil.boundTo(FlxG.camera.zoom, 0.05, 1);
 		var width:Int = Std.int(FlxG.width / zoom);
@@ -73,20 +73,16 @@ class CustomFadeTransition extends lore.ScriptableSubState {
 	}
 
 	override function update(elapsed:Float) {
-		super.update();
-		if (script.lastReturn == FunkinLua.Function_Stop) return;
-		if(isTransIn) {
-			transBlack.y = transGradient.y + transGradient.height;
-		} else {
-			transBlack.y = transGradient.y - transBlack.height;
-		}
 		super.update(elapsed);
-		if(isTransIn) {
-			transBlack.y = transGradient.y + transGradient.height;
-		} else {
-			transBlack.y = transGradient.y - transBlack.height;
+		if (script?.lastReturn == FunkinLua.Function_Stop) return;
+		if (transBlack != null && transGradient != null) { 
+			if(isTransIn) {
+				transBlack.y = transGradient.y + transGradient.height;
+			} else {
+				transBlack.y = transGradient.y - transBlack.height;
+			}
 		}
-		super.updatePost();
+		super.updatePost(elapsed);
 	}
 
 	override function destroy() {

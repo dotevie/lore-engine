@@ -5,6 +5,7 @@ import shadertoy.FlxShaderToyRuntimeShader;
 import hscript.Parser;
 import hscript.Interp;
 import hscript.Expr;
+import flixel.FlxG;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 import #if html5 lime.utils.Assets; #else sys.io.File; #end
 #if sys import flixel.system.macros.FlxMacroUtil; #end
@@ -18,7 +19,7 @@ using StringTools;
  * 
  * getExprFromString and the import code (as well as the inspiration for this file in general) is owed to YoshiCrafter29.
  * 
- * Feel free to add any lua callbacks I forgot, and merge them as PRs, if you wish.
+ * Feel free to add any lua callbacks I forgot, and merge them as PRs, ifzz you wish.
  * 
  * @see http://github.com/YoshiCrafter29/YoshiCrafterEngine
  */
@@ -154,7 +155,7 @@ class FunkinHX implements IFlxDestroyable {
             set("Math", Math);
             set("Type", Type);
             set("Std", Std);
-            if (PlayState.inPlayState) {
+            if (PlayState.inPlayState && PlayState.instance != null) {
                 set("add", PlayState.instance.add);
                 set("addBehindDad", PlayState.instance.addBehindDad);
                 set("addBehindGF", PlayState.instance.addBehindGF);
@@ -280,13 +281,18 @@ class FunkinHX implements IFlxDestroyable {
                 lastReturn = interp.callMethod(f, args);
                 return lastReturn;
             } catch (e:Dynamic) {
-                if (!ignoreErrors && !flixel.FlxG.keys.pressed.SHIFT && !__blocked) {
-                    openfl.Lib.application.window.alert('Error with script: ' + scriptName + ' at line ' + interp.posInfos().lineNumber + ":\n" + e + '\n\nHold SHIFT to bypass the error if it\'s blocking gameplay.', 'Haxe script error');
-                    sys.thread.Thread.create(() -> {
-                        __blocked = true;
-                        inline CoolUtil.blockExecution(0.125);
-                        __blocked = false;
-                    });
+                if (!ignoreErrors) {
+                    if ((ClientPrefs.devMode && !FlxG.keys.pressed.SHIFT && !__blocked) || !(FlxG.state is PlayState)) {
+                        openfl.Lib.application.window.alert('Error with script: ' + scriptName + ' at line ' + interp.posInfos().lineNumber + ":\n" + Std.string(e).split('hscript:${interp.posInfos().lineNumber}: ')[1] + '\n\nHold SHIFT to bypass the error if it\'s blocking gameplay.', 'Haxe script error');
+                        sys.thread.Thread.create(() -> {
+                            __blocked = true;
+                            inline CoolUtil.blockExecution(0.125);
+                            __blocked = false;
+                        });
+                    }
+                    else if (FlxG.state is PlayState) {
+                        PlayState.instance.addTextToDebug('$scriptName:${interp.posInfos().lineNumber}: ${Std.string(e).split('hscript:${interp.posInfos().lineNumber}: ')[1]}', 0xffff0000);
+                    }
                 }
                 lastReturn = null;
                 return null;

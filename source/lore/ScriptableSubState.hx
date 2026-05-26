@@ -39,7 +39,7 @@ class ScriptableSubState extends MusicBeatSubstate {
         script.set("state", this);
         script.set("primaryState", flixel.FlxG.state);
         script.set("close", close);
-        script.set("controls", controls);
+        //script.set("controls", controls);
         script.set("add", add);
         script.set("remove", remove);
         script.set("insert", insert);
@@ -53,7 +53,7 @@ class ScriptableSubState extends MusicBeatSubstate {
         if (script != null) script.runFunc("createPost", []);
     }
     public override function update(elapsed:Float):Void {
-        if (flixel.FlxG.keys.justPressed.F8) close();
+        if (ClientPrefs.devMode && flixel.FlxG.keys.justPressed.F8) close();
         if (script != null) script.runFunc("update", [elapsed]);
         super.update(elapsed);
     }

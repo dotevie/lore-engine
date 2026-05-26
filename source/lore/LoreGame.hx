@@ -56,7 +56,7 @@ class LoreGame extends flixel.FlxGame {
 	}
 
     private static function onCrash(e:Exception) {
-		if (PlayState.inPlayState) PlayState.instance.endSong();
+		if (PlayState.inPlayState) PlayState.instance?.endSong();
         FlxG.sound?.music?.stop();
         for (i in FlxG.sound.list.members) i?.stop();
 		FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;

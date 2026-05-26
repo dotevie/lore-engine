@@ -50,7 +50,7 @@ class ScriptableState extends MusicBeatState {
         if (script != null) script.runFunc("createPost", []);
     }
     public override function update(elapsed:Float):Void {
-        if (flixel.FlxG.keys.justPressed.F8) MusicBeatState.switchState(Type.createInstance(CoolUtil.lastState, []));
+        if (ClientPrefs.devMode && flixel.FlxG.keys.justPressed.F8) MusicBeatState.switchState(Type.createInstance(CoolUtil.lastState, []));
         if (script != null) script.runFunc("update", [elapsed]);
         super.update(elapsed);
     }

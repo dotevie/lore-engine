@@ -34,8 +34,8 @@ class MusicBeatState extends FlxUIState
 
 
 	override public function new() {
-		PlayState.inPlayState = (Type.getClass(this) == PlayState);
 		super();
+		PlayState.inPlayState = (Type.getClass(this) == PlayState);
 	}
 
 	override function destroy() {
