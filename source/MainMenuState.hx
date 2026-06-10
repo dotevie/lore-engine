@@ -169,14 +169,21 @@ class MainMenuState extends lore.ScriptableState
 		FlxG.camera.follow(camFollowPos, null, 1);
 
 		var verText = "Lore Engine v" + (loreEngineVersion.endsWith(".0") ? loreEngineVersion.substr(0, loreEngineVersion.length - 2) : loreEngineVersion) + " " + versionSuffix;
-		if (isNotFinal && commitHash != "") verText += ' (not final, commit hash ${commitHash.substr(0, 6)})';
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, verText, 12);
+		if (isNotFinal && commitHash != "") verText += ' (${commitHash.substr(0, 6)})';
+		var versionShit:FlxText = new FlxText(12, FlxG.height, 0, verText, 12);
 		versionShit.scrollFactor.set();
 		if (menuJson.overrideVersionText && menuJson.customVersionText != "") versionShit.text = menuJson.customVersionText;
 		#if debug verText.text += ' (debug)'; #end
+		versionShit.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.screenCenter(X);
-		versionShit.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (menuJson.showVersionText) add(versionShit);
+		versionShit.y = FlxG.height - versionShit.height - 10;
+		var versionBox = new FlxSprite(versionShit.x - 10, versionShit.y - 10).makeGraphic(Math.ceil(versionShit.width + 20), Math.ceil(versionShit.height + 20), FlxColor.BLACK);
+		versionBox.scrollFactor.set();
+		versionBox.alpha = 0.6;
+		if (menuJson.showVersionText) {
+			add(versionBox);
+			add(versionShit);
+		}
 
 		// NG.core.calls.event.logEvent('swag').send();
 
