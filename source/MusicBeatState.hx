@@ -13,6 +13,8 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import lore.ControlGlyphsGroup;
+import flixel.FlxSprite;
+import flixel.util.FlxColor;
 
 class MusicBeatState extends FlxUIState
 {
@@ -200,12 +202,20 @@ class MusicBeatState extends FlxUIState
 	}
 
 	private var glyphs:Array<ControlGlyphsGroup> = [];
+	private var glyphBox:FlxSprite = null;
+	private var glyphCamera:FlxCamera;
 	// [name, (keyboard glyphs (comma separated), gamepad glyphs (comma separated)]
-	public function createControlGlyphs(destinationCamera:FlxCamera, options:Array<Array<String>>) {
+	public function createControlGlyphs(destinationCamera:FlxCamera, options:Array<Array<String>>, ?drawBox:Bool = true) {
 		if (!ClientPrefs.showGlyphs) return;
+		glyphCamera = destinationCamera;
 		for (i in glyphs) {
 			glyphs.remove(i);
 			i.destroy();
+			if (glyphBox != null) {
+				remove(glyphBox);
+				glyphBox.destroy();
+				glyphBox = null;
+			}
 		}
 		var startY:Float = FlxG.height;
 		var startIndex:Int = options.length - 1;
@@ -225,10 +235,29 @@ class MusicBeatState extends FlxUIState
 			startY = glyph.y;
 			startIndex--;
 		}
+		if (drawBox) drawBoxUnderControlGlyphs();
 	}
 
 	public function createDefaultControlGlyphs(?cam:FlxCamera) {
-		createControlGlyphs(cam ?? FlxG.camera, [["Navigate", "ui_up,ui_down", "DPAD_UP,DPAD_DOWN"], ["Select", "accept", #if !switch "A" #else "B" #end], ["Back", "back", #if !switch "B" #else "A" #end]]);
+		createControlGlyphs(cam ?? FlxG.camera, [["Navigate", "ui_up,ui_down", "DPAD_UP,DPAD_DOWN"], ["Select", "accept", #if !switch "A" #else "B" #end], ["Back", "back", #if !switch "B" #else "A" #end]], true);
+	}
+	public function drawBoxUnderControlGlyphs(?color:FlxColor = 0xff000000, ?alpha:Float = 0.6, ?padding:Int = 10) {
+		if (glyphs.length == 0) {
+			trace("drawBoxUnderControlGlyphs: no glyphs");
+			return;
+		}
+		var index = members.indexOf(glyphs[0]);
+		var startY = glyphs[glyphs.length - 1].y - padding;
+		var startX:Float = 100000;
+		for (i in glyphs) {
+			if (i.x < startX) startX = i.x;
+		}
+		startX = startX - padding;
+		glyphBox = new FlxSprite(startX, startY).makeGraphic(Math.ceil(FlxG.width - startX), Math.ceil(FlxG.height - startY), color);
+		glyphBox.alpha = alpha;
+		glyphBox.camera = glyphCamera;
+		glyphBox.scrollFactor.set();
+		insert(index, glyphBox);
 	}
 }
 

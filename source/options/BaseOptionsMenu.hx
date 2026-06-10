@@ -82,7 +82,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		descText = new FlxText(50, 600, 1180, "", 32);
+		descText = new FlxText(50, 600, ClientPrefs.showGlyphs ? 960 : 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
@@ -118,6 +118,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			updateTextFrom(optionsArray[i]);
 		}
 
+		createDefaultControlGlyphs(camera);
 		changeSelection();
 		reloadCheckboxes();
 	}
@@ -290,6 +291,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.text = optionsArray[curSelected].description;
 		descText.screenCenter(Y);
 		descText.y += 270;
+		if (ClientPrefs.showGlyphs) {
+			descText.screenCenter(X);
+			descText.x -= (glyphBox.width / 2);
+		}
 
 		var bullShit:Int = 0;
 
