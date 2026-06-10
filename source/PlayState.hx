@@ -1110,6 +1110,7 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
+		if (ClientPrefs.decenterStrums) strumLine.x -= 6;
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 
@@ -3020,6 +3021,7 @@ class PlayState extends MusicBeatState
 				case true:
 					babyArrow = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
 			}
+			if (ClientPrefs.decenterStrums) babyArrow.x -= 6;
 			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
@@ -4364,6 +4366,7 @@ class PlayState extends MusicBeatState
 				{
 					WeekData.loadTheFirstEnabledMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FreeplayState.songPlaying = false;
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
@@ -4434,6 +4437,7 @@ class PlayState extends MusicBeatState
 				}
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FreeplayState.songPlaying = false;
 				changedDifficulty = false;
 			}
 			transitioning = true;

@@ -15,6 +15,7 @@ class ClientPrefs {
 		}
 		return rawMemoryFormat = value;
 	}
+	public static var decenterStrums:Bool = false;
 	public static var devMode:Bool = false;
 	public static var showGlyphs:Bool = true;
 	public static var scaleMode:String = "LINEAR";
@@ -71,6 +72,13 @@ class ClientPrefs {
 	public static var controllerMode:Bool = false;
 	public static var pauseMusic:String = 'Tea Time';
 	public static var newTimeBar:Bool = true;
+	@:isVar public static var psychTimeBar(get, set):Bool;
+	public static function get_psychTimeBar() {
+		return !newTimeBar;
+	}
+	public static function set_psychTimeBar(val:Bool) {
+		return newTimeBar = !val;
+	}
 	public static var showMS:Bool = true;
 	public static var checkForUpdates:Bool = true;
 
@@ -120,7 +128,7 @@ class ClientPrefs {
 		'ui_up'			=> [W, UP],
 		'ui_right'		=> [D, RIGHT],
 		
-		'accept'		=> [SPACE, ENTER],
+		'accept'		=> [ENTER, SPACE],
 		'back'			=> [BACKSPACE, ESCAPE],
 		'pause'			=> [ENTER, ESCAPE],
 		'reset'			=> [R, NONE],
@@ -140,6 +148,7 @@ class ClientPrefs {
 	}
 
 	public static function saveSettings() {
+		FlxG.save.data.decenterStrums = decenterStrums;
 		FlxG.save.data.devMode = devMode;
 		FlxG.save.data.showGlyphs = showGlyphs;
 		FlxG.save.data.psychCam = psychCam;
@@ -219,6 +228,9 @@ class ClientPrefs {
 	}
 
 	public static function loadPrefs() {
+		if (FlxG.save.data.decenterStrums != null) {
+			decenterStrums = FlxG.save.data.decenterStrums;
+		}
 		if (FlxG.save.data.devMode != null) {
 			devMode = FlxG.save.data.devMode;
 		}

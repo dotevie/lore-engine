@@ -30,6 +30,21 @@ class ParitySettingsSubState extends BaseOptionsMenu
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
+
+		var option:Option = new Option('Psych Time Bar',
+			"If checked, the Time Bar will look like it does in Psych Engine.",
+			'psychTimeBar',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Decenter Strumlines', //Name
+			'If checked, the strumlines will be re-moved to the left by 6 pixels.\nIf you need that for something.', //Description
+			'decenterStrums', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
+		addOption(option);
+
 		super(0xffffffff);
 	}
 
