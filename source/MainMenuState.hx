@@ -168,7 +168,7 @@ class MainMenuState extends lore.ScriptableState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var verText = "Lore Engine Legacy v" + (loreEngineVersion.endsWith(".0") ? loreEngineVersion.replace(".0", "") : loreEngineVersion) + versionSuffix;
+		var verText = "Lore Engine Legacy v" + (loreEngineVersion.endsWith(".0") ? loreEngineVersion.substr(0, loreEngineVersion.length - 2) : loreEngineVersion) + " " + versionSuffix;
 		if (isNotFinal && commitHash != "") verText += ' (not final, commit hash ${commitHash.substr(0, 6)})';
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, verText, 12);
 		versionShit.scrollFactor.set();

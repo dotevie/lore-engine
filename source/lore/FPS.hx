@@ -128,7 +128,7 @@ class FPS extends TextField
 		}
 		if (ClientPrefs.showFPSNum) { templateText += '{fps}${fpsThing}'; if (ClientPrefs.showMem || ClientPrefs.showLore) templateText += "\n"; }
 		if (ClientPrefs.showMem) { templateText += '${memThing}{memory}'; if (ClientPrefs.showLore) templateText += "\n"; }
-		if (ClientPrefs.showLore) { templateText += '${loreThing}${(MainMenuState.loreEngineVersion.endsWith(".0") ? MainMenuState.loreEngineVersion.replace(".0", "") : MainMenuState.loreEngineVersion) } ${MainMenuState.versionSuffix}'; }
+		if (ClientPrefs.showLore) { templateText += '${loreThing}${(MainMenuState.loreEngineVersion.endsWith(".0") ? MainMenuState.loreEngineVersion.substr(0, MainMenuState.loreEngineVersion.length - 2) : MainMenuState.loreEngineVersion) } ${MainMenuState.versionSuffix}'; }
 		#if debug if (templateText != "") templateText += ' (debug)'; #end
 		#if !HIDE_HASH if (MainMenuState.isNotFinal && MainMenuState.commitHash != "") { if (templateText != "") templateText += " "; templateText += '(${MainMenuState.commitHash.substr(0, 6)})'; } #end
 		visible = ClientPrefs.showFPS;
