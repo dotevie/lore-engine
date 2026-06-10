@@ -121,6 +121,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		titleText.scrollFactor.set();
 		add(titleText);
 		changeSelection();
+		createDefaultControlGlyphs();
 	}
 
 	var leaving:Bool = false;

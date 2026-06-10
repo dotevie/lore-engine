@@ -84,6 +84,7 @@ class SoundFrontEnd
 
 	public var volumeUpSound:String = "volumeUp";
 	public var volumeDownSound:String = "volumeDown";
+	public var volumeMaxSound:String = "volumeMax";
 
 	/**
 	 * Set up and play a looping background soundtrack.
@@ -333,6 +334,7 @@ class SoundFrontEnd
 		showSoundTray();
 	}
 
+	private var _atMax:Bool = false;
 	/**
 	 * Changes the volume by a certain amount, also activating the sound tray.
 	 */
@@ -342,9 +344,17 @@ class SoundFrontEnd
 		volume += Amount;
         if (soundTrayEnabled) {
             if (Amount > 0) {
-                play(Paths.sound(volumeUpSound), 0.5);
+				if (_atMax) {
+					play(Paths.sound(volumeMaxSound), 0.5);
+				} else {
+					play(Paths.sound(volumeUpSound), 0.5);
+				}
+				if (volume >= .95) {
+					_atMax = true;
+				}
             } else {
                 play(Paths.sound(volumeDownSound), 0.5);
+				_atMax = false;
             }
         }
 		showSoundTray();
@@ -432,6 +442,7 @@ class SoundFrontEnd
 		if (FlxG.save.data.volume != null)
 		{
 			volume = FlxG.save.data.volume;
+			_atMax = volume >= 1;
 		}
 
 		if (FlxG.save.data.mute != null)
