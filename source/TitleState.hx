@@ -611,11 +611,11 @@ class TitleState extends MusicBeatState
 				case 12:
 					deleteCoolText();
 				case 13:
-					addMoreText('Lore');
+					addMoreText('FNF');
 				case 14:
-					addMoreText('Engine');
+					addMoreText('Lore');
 				case 15:
-					addMoreText('Legacy'); 
+					addMoreText('Engine'); 
 
 				case 16:
 					skipIntro();
