@@ -200,7 +200,7 @@ class Main extends Sprite
 				FileSystem.createDirectory("./crash/");
 
 
-			errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/sayofthelor/lore-engine";
+			errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/dotevie/lore-engine";
 
 			File.saveContent(path, errMsg + "\n");
 	

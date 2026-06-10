@@ -56,7 +56,7 @@ class CrashState extends MusicBeatState {
         sys.io.File.saveContent(path, emsg + "\n");
         emsg += "\n\nA crash report has been saved to " + path + ".";
         #end
-        emsg += "\n\nPlease report this error to the GitHub page: https://github.com/sayofthelor/lore-engine\n\nPress the ACCEPT button to restart the game.";
+        emsg += "\n\nPlease report this error to the GitHub page: https://github.com/dotevie/lore-engine\n\nPress the ACCEPT button to restart the game.";
         var msg:FlxText = new FlxText(25, topTitle.members[0].height + 50, flixel.FlxG.width - 50, emsg).setFormat("VCR OSD Mono", 24, 0xffffffff, LEFT, OUTLINE, 0xff000000);
         msg.borderSize = 2;
         add(msg);
