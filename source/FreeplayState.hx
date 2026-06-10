@@ -187,6 +187,11 @@ class FreeplayState extends MusicBeatState
 
 		createControlGlyphs(FlxG.camera, [["Navigate", 'ui_up,ui_down,SCROLL_UP,SCROLL_DOWN', 'DPAD_UP,DPAD_DOWN'], ["Change Difficulty", "ui_left,ui_right", "DPAD_LEFT,DPAD_RIGHT"], ["Select", 'accept', 'A'], ["Preview", "SPACE", ''], ["Gameplay Changers", 'CONTROL', ''], ["Reset Score", 'reset', 'LS'], ["Back", 'back', 'B']]);
 		super.create();
+		if (songPlaying) {
+			if (vocals != null) vocals.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+			FlxG.sound.music.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+			if (vocals2 != null) vocals2.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+		}
 	}
 
 	override function closeSubState() {
@@ -222,11 +227,20 @@ class FreeplayState extends MusicBeatState
 	}*/
 
 	var instPlaying:Int = -1;
+	public static var songPlaying:Bool = false;
 	public static var vocals:FlxSound = null;
 	public static var vocals2:FlxSound = null;
 	var holdTime:Float = 0;
+	private var _syncTime:Float = 0;
 	override function update(elapsed:Float)
 	{
+		if (songPlaying) {
+			_syncTime += elapsed;
+			if (_syncTime > 0.25) {
+				resyncVocals();
+				_syncTime = 0;
+			}
+		}
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -321,11 +335,12 @@ class FreeplayState extends MusicBeatState
 			{
 				try {
 					#if PRELOAD_ALL
-					destroyFreeplayVocals();
 					FlxG.sound.music.volume = 0;
 					Paths.currentModDirectory = songs[curSelected].folder;
 					var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+					songPlaying = true;
+					destroyFreeplayVocals();
 					if (PlayState.SONG.needsVoices)
 						vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 					else
@@ -338,6 +353,11 @@ class FreeplayState extends MusicBeatState
 					FlxG.sound.list.add(vocals);
 					FlxG.sound.list.add(vocals2);
 					FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+					#if !html5
+					FlxG.sound.music.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+					if (vocals != null) vocals.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+					if (vocals2 != null) vocals2.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+					#end
 					vocals.play();
 					vocals.persist = true;
 					vocals.looped = true;
@@ -417,6 +437,25 @@ class FreeplayState extends MusicBeatState
 		super.update(elapsed);
 	}
 
+	function resyncVocals() {
+		var playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		if (
+			(vocals == null && Math.abs(vocals.time - FlxG.sound.music.time) >= 20 * playbackRate)
+			&& (vocals2 == null && Math.abs(vocals2.time - FlxG.sound.music.time) >= 20 * playbackRate)
+		) {
+			if (vocals != null && FlxG.sound.music.time <= vocals.length) {
+				vocals.pause();
+				vocals.time = FlxG.sound.music.time;
+				vocals.play();
+			}
+			if (vocals2 != null && FlxG.sound.music.time <= vocals2.length) {
+				vocals2.pause();
+				vocals2.time = FlxG.sound.music.time;
+				vocals2.play();
+			}
+		}
+	}
+
 	public static function destroyFreeplayVocals() {
 		if(vocals != null) {
 			vocals.stop();
@@ -449,6 +488,15 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
+	}
+
+	override public function destroy() {
+		super.destroy();
+		#if !html5
+		FlxG.sound.music.pitch = 1;
+		if (vocals != null) vocals.pitch = 1;
+		if (vocals2 != null) vocals2.pitch = 1;
+		#end
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)

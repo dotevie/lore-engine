@@ -47,6 +47,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.maxValue = 3.0;
 		option.changeValue = 0.05;
 		option.displayFormat = '%vX';
+		option.onChange = () -> {
+			FlxG.sound.music.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+			if (FreeplayState.vocals != null) FreeplayState.vocals.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+			if (FreeplayState.vocals2 != null) FreeplayState.vocals2.pitch = ClientPrefs.getGameplaySetting('songspeed', 1);
+		}
 		option.decimals = 2;
 		optionsArray.push(option);
 		#end

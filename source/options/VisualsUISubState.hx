@@ -158,13 +158,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Time Elapsed / Total', 'SN and Time Left', 'SN and Time Elapsed', 'Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
 
-		var option:Option = new Option('New Time Bar',
-			"Toggles between the old and new time bar.",
-			'newTimeBar',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",
 			'flashing',
@@ -305,7 +298,10 @@ class VisualsUISubState extends BaseOptionsMenu
 
 	override function destroy()
 	{
-		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		if(changedMusic) {
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FreeplayState.songPlaying = false;
+		}
 		super.destroy();
 	}
 

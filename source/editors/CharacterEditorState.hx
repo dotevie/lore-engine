@@ -1151,6 +1151,7 @@ class CharacterEditorState extends MusicBeatState
 				} else {
 					MusicBeatState.switchState(new editors.MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FreeplayState.songPlaying = false;
 				}
 				FlxG.mouse.visible = false;
 				return;

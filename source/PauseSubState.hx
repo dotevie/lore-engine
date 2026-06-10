@@ -163,7 +163,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-		createControlGlyphs(camera, [["Navigate", "ui_up,ui_down", "DPAD_UP,DPAD_DOWN"], ["Select", "accept", #if !switch "A" #else "B" #end]]);
+		createControlGlyphs(camera, [["Navigate", "ui_up,ui_down", "DPAD_UP,DPAD_DOWN"], ["Select", "accept", #if !switch "A" #else "B" #end]], false);
 		for (glyph in glyphs) {
 			glyph.alpha = 0;
 			FlxTween.tween(glyph, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut});
@@ -307,6 +307,7 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FreeplayState.songPlaying = false;
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
 				default: // CUSTOM STUFF YEAHHHH
