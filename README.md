@@ -16,6 +16,12 @@ Over that version of Psych Engine, its main additional features are:
 - Separate vocal tracks
 - General aesthetic and usability improvements
 
+# Note for actions builds
+There have been many changes since the last public Lore Engine release back in 2024. None of them break compatibility but they are almost all undocumented as of now. If you want to see what's changed, I try to keep a record of it in commit names. 
+
+> [!IMPORTANT]
+> Commits prefixed with `I:` are incrememental commits. They may have been picked out of larger changes and aren't guaranteed to build as is. Commits prefixed with `L:` are landmark commits and should build properly.
+
 # Documentation
 Lore Engine is primarily undocumented. Documentation is in the works, but it will likely be a bit of time before it's in a state I'm comfortable with making available. If you can't gleam how something works from the source code, feel free to shoot me a DM on [Bluesky](https://bsky.app/profile/dotevie.com),
 
