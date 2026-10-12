@@ -395,7 +395,7 @@ class Paths
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
 		#if MODS_ALLOWED
-			try { currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath)); } catch(e) {}
+			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
 		#else
 		{
 			var folder:String = '';

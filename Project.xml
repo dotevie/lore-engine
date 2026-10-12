@@ -150,27 +150,7 @@
 	
 	<haxeflag name="-dce" value="no" />
 	<haxeflag name="--macro" value="include('sys')" unless="html5"/>
-	<haxeflag name="--macro" value="include('openfl')" />
-	<haxeflag name="--macro" value="include('openfl.desktop')" />
-	<haxeflag name="--macro" value="include('openfl.display')" />
-	<haxeflag name="--macro" value="include('openfl.display3D')" />
-	<haxeflag name="--macro" value="include('openfl.errors')" />
-	<haxeflag name="--macro" value="include('openfl.events')" />
-	<haxeflag name="--macro" value="include('openfle.external')" />
-	<haxeflag name="--macro" value="include('openfl.filesystem')" />
-	<haxeflag name="--macro" value="include('openfl.filters')" />
-	<haxeflag name="--macro" value="include('openfl.geom')" />
-	<haxeflag name="--macro" value="include('openfl.globalization')" />
-	<haxeflag name="--macro" value="include('openfl.media')" />
-	<haxeflag name="--macro" value="include('openfl.net')" />
-	<haxeflag name="--macro" value="include('openfl.permissions')" />
-	<haxeflag name="--macro" value="include('openfl.printing')" />
-	<haxeflag name="--macro" value="include('openfl.profilers')" />
-	<haxeflag name="--macro" value="include('openfl.security')" />
-	<haxeflag name="--macro" value="include('openfl.sensors')" />
-	<haxeflag name="--macro" value="include('openfl.text')" />
-	<haxeflag name="--macro" value="include('openfl.ui')" />
-	<haxeflag name="--macro" value="include('openfl.utils')" />
+	<!-- <haxeflag name="macro" value="include('openfl')" /> -->
 	<haxeflag name="--macro" value="include('flixel.animation')" />
 	<haxeflag name="--macro" value="include('flixel.effects')" />
 	<haxeflag name="--macro" value="include('flixel.graphics')" />
